@@ -30,9 +30,9 @@ class SpaceCar(
     val make: String,
     val color: String,
     val battery: SpaceBattery
-) {
-    fun fly(am: Int) {
-        for (am in 0..am) {
+) {        //Idk if astronomicalMiles is a thing but it sounds cool
+    fun fly(astronomicalMiles: Int) {
+        for (miles in 0..astronomicalMiles) {
             battery.level -= 10
         }
     }
