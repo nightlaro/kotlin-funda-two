@@ -104,8 +104,8 @@ fun main() {
             animal.speak()
         }
         val wildling = animal as? WildAnimal
-        if (wildling != null) {
-            println("Is this animal poisonous? ${wildling.isPoisonous}")
+        wildling?.let {
+            println("Is this animal poisonous? ${it.isPoisonous}")
         }
     }
 
