@@ -26,45 +26,18 @@ enum class Month(val season: Season) {
     October(Season.FALL),
     November(Season.FALL),
     December(Season.WINTER);
+
     fun monthsUntilJingleBells(): Int {
         return December.ordinal - this.ordinal
     }
+
     fun monthsUntilHalloweenDecorations() : Int {
         val halloweenStart = September.ordinal
         val halloweenEnd = October.ordinal
-        return if (this.ordinal in January.ordinal..halloweenStart) {
-            halloweenStart - this.ordinal
-        } else if (this.ordinal in halloweenStart..halloweenEnd) {
-            0
-        } else {
-            halloweenStart + (12 - this.ordinal)
-        }
-    }
-}
-
-class SimpleDate(var month: String) {
-    companion object {
-        val months = arrayOf(
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        )
-    }
-
-    fun monthsUntilJingleBells(): Int {
-        return months.indexOf("December") - months.indexOf(month)
-    }
-
-    fun monthsUntilHalloweenDecorations(): Int {
-        val currentMonth = SimpleDate.months.indexOf(month)
-        val halloweenStart = SimpleDate.months.indexOf("September")
-        val halloweenEnd = SimpleDate.months.indexOf("October")
-
-        return if (currentMonth in 0..halloweenStart) {
-            halloweenStart - currentMonth
-        } else if (currentMonth in halloweenStart..halloweenEnd) {
-            0
-        } else {
-            halloweenStart + (12 - currentMonth)
+        return when(this.ordinal) {
+            in January.ordinal..halloweenStart -> halloweenStart - this.ordinal
+            in halloweenStart..halloweenEnd -> 0
+            else -> halloweenStart + (values().size - this.ordinal)
         }
     }
 }
