@@ -40,6 +40,8 @@ open class WildAnimal(val isPoisonous : Boolean) : Animal() {
 
 }
 
+// defining variables inside of Pet(var one, var two) automatically creates a constructor?
+// difference between Pet (name: String) vs Pet (private val name: String) ?
 class Pet(private val name : String) : Animal() {
     fun play() {
         println("$name has played Black Jack and constantly gets a 21!")
@@ -47,6 +49,7 @@ class Pet(private val name : String) : Animal() {
 
     override fun speak() {
         super.speak()
+        println("My name is $name")
         println("I do what animals do but I am a pet so I'm special")
     }
 }
@@ -92,6 +95,9 @@ fun main() {
     val mochi = Pet("Mochi")
     val rattleSnake = WildAnimal(true)
     val mufasa = Simba("Mufasa", false)
+
+    mochi.speak()
+    mochi.play()
 
     fun doSomething(animal: Animal) {
         if (animal is Pet) {
