@@ -11,7 +11,7 @@ Challenge 1:
 
 class IceCream {
     var name: String = "Mickrazy"
-    val ingredients: ArrayList<String> by lazy { arrayListOf("Milk", "Sleep", "green flowers that can be made into strong ropes") }
+    val ingredients: MutableList<String> by lazy { mutableListOf("Milk", "Sleep", "green flowers that can be made into strong ropes") }
 }
 
 /*
