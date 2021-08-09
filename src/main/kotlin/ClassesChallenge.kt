@@ -54,7 +54,7 @@ class Pet(private val name : String) : Animal() {
     }
 }
 
-class Simba(private val name : String, isPoisonous: Boolean) : WildAnimal(isPoisonous) {
+class Lion(private val name : String, isPoisonous: Boolean) : WildAnimal(isPoisonous) {
     private var isKing : Boolean = false
         set(value) {
             println("Congratulations, you've come of age to become the wild King")
@@ -94,7 +94,7 @@ fun main() {
     val animal = Animal()
     val mochi = Pet("Mochi")
     val rattleSnake = WildAnimal(true)
-    val mufasa = Simba("Mufasa", false)
+    val mufasa = Lion("Mufasa", false)
 
     mochi.speak()
     mochi.play()
