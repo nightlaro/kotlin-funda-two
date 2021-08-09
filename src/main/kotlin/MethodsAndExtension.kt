@@ -16,7 +16,8 @@ Math Hint: The math you want to calculate the radius in `area`s setter is `sqrt(
 class Circle(var radius: Double = 0.0) {
     var area: Double = PI * radius * radius
         set(value) {
-            field = sqrt(value / PI)
+            field = value
+            radius = sqrt(value / PI)
         }
         get() {
             return PI * radius.square() //holy shit
