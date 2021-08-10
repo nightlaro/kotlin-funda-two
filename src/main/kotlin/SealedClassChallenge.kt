@@ -9,23 +9,31 @@ to pay for what they’re trying to buy.
 Hint: Try a companion object!
 */
 
-sealed class AcceptedCurrency {
+data class Item(val name: String, val cost: Float, val acceptedCurrency: List<Currency>)
+
+sealed class Currency(private val amount : Float) {
     companion object {
-        fun isSufficientFund(acceptedCurrency: List<AcceptedCurrency>, //needed help with this challenge through video,
-                                                                        // description was confusing and forgot some syntax but this makes sense
-                             cost: Float) : Boolean {
-            val totalOfDollar = acceptedCurrency.fold(0.0f) { acc, currency -> //seems like the same as reducer in javascript
-                acc + currency.valueInDollars
+        fun isSufficientFund(currency: List<Currency>,
+                             item: Item) : Boolean {
+            val totalOfDollars = currency.fold(0.0f) { acc, currency -> //seems like the same as reducer in javascript
+                if (item.acceptedCurrency.contains(currency)) {
+                    acc + currency.valueInDollars
+                } else {
+                    acc
+                }
             }
-            return totalOfDollar >= cost
+
+            return if (totalOfDollars >= item.cost) {
+                println("You can buy ${item.name} at the price of $${item.cost} and will have $${totalOfDollars - item.cost} left.")
+                true
+            } else {
+                println("You cannot buy ${item.name} at the price of $${item.cost}, you need $${item.cost - totalOfDollars} more")
+                false
+            }
         }
     }
-    abstract val valueInDollars: Float
-    var amount: Float = 0.0f
 
-    class Dollar: AcceptedCurrency() { override val valueInDollars = 1.0f }
-    class Euro: AcceptedCurrency() { override val valueInDollars = 1.25f }
-    class Crypto: AcceptedCurrency() { override val valueInDollars = 2534.92f }
+    abstract val valueInDollars: Float
 
     val name: String
         get() = when (this) {
@@ -38,24 +46,22 @@ sealed class AcceptedCurrency {
         return amount * valueInDollars
     }
 
-    // Challenge
-
+    class Dollar(amount: Float): Currency(amount) { override val valueInDollars = 1.0f }
+    class Euro(amount: Float): Currency(amount) { override val valueInDollars = 1.25f }
+    class Crypto(amount: Float): Currency(amount) { override val valueInDollars = 2534.92f }
 }
 
 fun main() {
-    val currency = AcceptedCurrency.Crypto()
-    currency.amount = .27541f
+    val currency = Currency.Crypto(.27541f)
 
-    val dollars = AcceptedCurrency.Dollar()
-    dollars.amount = 2000f
-    val crypto = AcceptedCurrency.Crypto()
-    crypto.amount = .23f
-    val euro = AcceptedCurrency.Euro()
-    euro.amount = 22.1f
+    val dollars = Currency.Dollar(2000f)
+    val crypto = Currency.Crypto(.23f)
+    val euro = Currency.Euro(22.1f)
 
     val myBalance = listOf(dollars, crypto, euro)
-    val costOf3070TI_GPU = 1000f
-
-    println(AcceptedCurrency.isSufficientFund(myBalance, costOf3070TI_GPU))
+    val graphicsCard = Item("NVIDIA Graphics Card 3080 TI", 1000f, myBalance)
+    val aVolleyOffice = Item("HAYES BUILDING", 400000000f, listOf(crypto, euro))
+    println(Currency.isSufficientFund(myBalance, graphicsCard))
+    println(Currency.isSufficientFund(myBalance, aVolleyOffice))
 
 }
